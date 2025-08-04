@@ -16,6 +16,7 @@ class ComplaintsListCubit extends Cubit<ComplaintsListState> {
       final dummyList = List.generate(
         5,
         (index) => ComplaintModel(
+          id: index,
           title: 'Issue #$index',
           description: 'Details for complaint $index',
           status: index % 2 == 0 ? 'Pending' : 'Resolved',

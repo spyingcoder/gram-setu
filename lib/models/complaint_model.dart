@@ -1,4 +1,5 @@
 class ComplaintModel {
+  final int id;
   final String title;
   final String description;
   final String status;
@@ -7,6 +8,7 @@ class ComplaintModel {
   final DateTime updatedAt;
 
   ComplaintModel({
+    required this.id,
     required this.title,
     required this.description,
     required this.status,
