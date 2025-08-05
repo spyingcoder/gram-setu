@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gram_setu/features/complaints/cubit/complaints_list_cubit.dart';
 import 'package:gram_setu/features/complaints/view/complaint_detail_screen.dart';
 import 'package:gram_setu/models/complaint_model.dart';
+import 'package:gram_setu/shared/routes/app_router.dart';
 import 'package:gram_setu/shared/utility/enums.dart';
 
 class ComplaintsListingScreen extends StatelessWidget {
@@ -15,6 +16,14 @@ class ComplaintsListingScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: const Text("Complaints"),
+        ),
+
+        // 👇 Floating Action Button
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.pushNamed(context, AppRouter.complaintAdd);
+          },
+          child: const Icon(Icons.add),
         ),
         body: BlocBuilder<ComplaintsListCubit, ComplaintsListState>(
           builder: (context, state) {
@@ -54,8 +63,9 @@ class ComplaintsListingScreen extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (_) =>
-                              ComplaintDetailsScreen(complaint: complaint),
+                          builder: (_) => ComplaintDetailsScreen(
+                            complaintId: complaint.id,
+                          ),
                         ),
                       );
                     },

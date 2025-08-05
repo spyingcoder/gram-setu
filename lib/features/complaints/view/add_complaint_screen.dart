@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../cubit/complaint_cubit.dart';
+import 'package:gram_setu/features/complaints/cubit/complaint_cubit.dart';
+import 'package:gram_setu/shared/utility/enums.dart';
 
 class AddComplaintsScreen extends StatelessWidget {
   const AddComplaintsScreen({super.key});
@@ -64,7 +65,8 @@ class AddComplaintsScreen extends StatelessWidget {
                               ),
                               IconButton(
                                 onPressed: cubit.removeImage,
-                                icon: const Icon(Icons.close, color: Colors.red),
+                                icon:
+                                    const Icon(Icons.close, color: Colors.red),
                               ),
                             ],
                           ),
@@ -72,14 +74,30 @@ class AddComplaintsScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 32),
                     ElevatedButton(
-                      onPressed: () {
-                        // To be implemented: Submit logic
-                      },
+                      onPressed: state.status == Status.loading
+                          ? null
+                          : () async {
+                              await cubit.submitComplaint();
+
+                              if (context.mounted &&
+                                  cubit.state.status == Status.success) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                      content: Text(
+                                          'Complaint submitted successfully')),
+                                );
+                                Navigator.pop(
+                                    context); // Go back to the list screen
+                              }
+                            },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.green.shade800,
-                        padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 12),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 40, vertical: 12),
                       ),
-                      child: const Text('Submit Complaint'),
+                      child: state.status == Status.loading
+                          ? const CircularProgressIndicator(color: Colors.white)
+                          : const Text('Submit Complaint'),
                     ),
                   ],
                 ),

@@ -4,13 +4,20 @@ import 'package:gram_setu/shared/widgets/status_badge.dart';
 import '../../../models/complaint_model.dart';
 
 class ComplaintDetailsScreen extends StatelessWidget {
-  final ComplaintModel complaint;
+  final int complaintId;
 
-  const ComplaintDetailsScreen({Key? key, required this.complaint})
-      : super(key: key);
+  const ComplaintDetailsScreen({super.key, required this.complaintId});
 
   @override
   Widget build(BuildContext context) {
+    final complaint = ComplaintModel(
+      id: complaintId,
+      title: "title",
+      description: "description",
+      status: "status",
+      createdAt: DateTime.now(),
+      updatedAt: DateTime.now(),
+    );
     return Scaffold(
       appBar: AppBar(
         title: const Text('Complaint Details'),
